@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Flashcard;
+use App\Models\User;
 use App\Models\UserAnswer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +20,17 @@ class UserAnswerFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'answer' => fake()->text,
+            'user_id' => User::factory(),
+            'flashcard_id' => Flashcard::factory(),
         ];
+    }
+
+    public function correct(Flashcard $flashcard): static
+    {
+        return $this->state(fn($_) => [
+            'flashcard_id' => $flashcard,
+            'answer' => $flashcard->answer
+        ]);
     }
 }

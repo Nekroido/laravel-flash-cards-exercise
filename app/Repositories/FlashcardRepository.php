@@ -7,6 +7,7 @@ use App\Enums\AnswerState;
 use App\Models\Flashcard;
 use App\Models\UserAnswer;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -54,10 +55,17 @@ class FlashcardRepository implements FlashcardRepositoryInterface
     public function getStatistics(): array
     {
         return $this->getQueryBuilder()
-            ->selectRaw('count(flashcards.id) as `total_questions`')
-            ->selectRaw('count(a.id) as `total_answers`')
-            ->selectRaw('sum(if(a.state = ?, 1, 0)) as `correct_answers`', [AnswerState::CORRECT->value])
-            ->leftJoin('user_answers as a', 'a.flashcard_id', 'flashcards.id')
+            ->selectRaw('count(distinct flashcards.id) as `total_questions`')
+            ->selectRaw('count(distinct any.flashcard_id) as `total_answers`')
+            ->selectRaw('count(distinct correct.flashcard_id) as `correct_answers`')
+            ->leftJoin('user_answers as any', 'any.flashcard_id', 'flashcards.id')
+            ->join(
+                'user_answers as correct',
+                fn(JoinClause $join) => $join
+                    ->on('correct.flashcard_id', '=', 'flashcards.id')
+                    ->where('correct.state', '=', AnswerState::CORRECT->value),
+                type: 'left'
+            )
             ->first()
             ->toArray();
     }
