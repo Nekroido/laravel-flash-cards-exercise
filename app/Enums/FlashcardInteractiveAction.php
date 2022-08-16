@@ -5,7 +5,7 @@ namespace App\Enums;
 enum FlashcardInteractiveAction: string
 {
     case CREATE_FLASHCARD = 'Create a flashcard';
-    case LIST_FLASHCARDS = 'List all flashcard';
+    case LIST_FLASHCARDS = 'List all flashcards';
     case PRACTICE = 'Practice';
     case STATS = 'Stats';
     case RESET = 'Reset';
