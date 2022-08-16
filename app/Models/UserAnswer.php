@@ -37,15 +37,6 @@ class UserAnswer extends Model
         'state' => AnswerState::class
     ];
 
-    protected static function booted()
-    {
-        static::saving(
-            static fn(self $answer) => $answer->state = $answer->flashcard->answer === $answer->answer
-                ? AnswerState::CORRECT
-                : AnswerState::INCORRECT
-        );
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

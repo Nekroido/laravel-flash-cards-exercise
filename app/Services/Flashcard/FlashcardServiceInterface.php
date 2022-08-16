@@ -5,8 +5,8 @@ namespace App\Services\Flashcard;
 use App\Enums\AnswerState;
 use App\Models\Flashcard;
 use App\Models\User;
-use App\Services\Flashcard\Exceptions\CorrectAnswerAlreadyExists;
-use App\Services\Flashcard\Exceptions\FlashcardAlreadyExists;
+use App\Services\Flashcard\Exceptions\CorrectAnswerAlreadyExistsException;
+use App\Services\Flashcard\Exceptions\FlashcardAlreadyExistsException;
 use Illuminate\Support\Collection;
 
 interface FlashcardServiceInterface
@@ -25,7 +25,7 @@ interface FlashcardServiceInterface
      * @param string $answer
      * @return void
      *
-     * @throws FlashcardAlreadyExists
+     * @throws FlashcardAlreadyExistsException
      */
     public function createFlashcard(string $question, string $answer): void;
 
@@ -45,7 +45,7 @@ interface FlashcardServiceInterface
      * @param string $answer
      * @return AnswerState
      *
-     * @throws CorrectAnswerAlreadyExists
+     * @throws CorrectAnswerAlreadyExistsException
      */
     public function acceptAnswer(Flashcard $flashcard, User $user, string $answer): AnswerState;
 

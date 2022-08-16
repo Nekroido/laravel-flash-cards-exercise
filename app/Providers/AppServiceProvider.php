@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Contracts\FlashcardRepositoryInterface;
+use App\Contracts\UserAnswerRepositoryInterface;
+use App\Repositories\FlashcardRepository;
+use App\Repositories\UserAnswerRepository;
+use App\Services\Flashcard\FlashcardService;
+use App\Services\Flashcard\FlashcardServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,9 +17,11 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->bind(FlashcardRepositoryInterface::class, FlashcardRepository::class);
+        $this->app->bind(UserAnswerRepositoryInterface::class, UserAnswerRepository::class);
+        $this->app->bind(FlashcardServiceInterface::class, FlashcardService::class);
     }
 
     /**
@@ -21,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

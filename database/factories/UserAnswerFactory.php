@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\AnswerState;
 use App\Models\Flashcard;
 use App\Models\User;
 use App\Models\UserAnswer;
@@ -23,6 +24,7 @@ class UserAnswerFactory extends Factory
             'answer' => fake()->text,
             'user_id' => User::factory(),
             'flashcard_id' => Flashcard::factory(),
+            'state' => AnswerState::INCORRECT
         ];
     }
 
@@ -30,7 +32,8 @@ class UserAnswerFactory extends Factory
     {
         return $this->state(fn($_) => [
             'flashcard_id' => $flashcard,
-            'answer' => $flashcard->answer
+            'answer' => $flashcard->answer,
+            'state' => AnswerState::CORRECT
         ]);
     }
 }

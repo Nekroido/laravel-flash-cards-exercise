@@ -2,7 +2,7 @@
 
 namespace App\Services\Flashcard\Exceptions;
 
-class FlashcardAlreadyExists extends FlashcardException
+class FlashcardAlreadyExistsException extends FlashcardException
 {
     public function __construct(string $question)
     {

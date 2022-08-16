@@ -2,7 +2,7 @@
 
 namespace App\Services\Flashcard\Exceptions;
 
-class CorrectAnswerAlreadyExists extends FlashcardException
+class CorrectAnswerAlreadyExistsException extends FlashcardException
 {
     public function __construct()
     {
